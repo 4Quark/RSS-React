@@ -1,35 +1,76 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import React from 'react';
+import axios, { AxiosResponse } from 'axios';
 import './App.css';
+import SearchCard from './components/SearchCard';
+import SearchBar from './components/SearchBar';
+import { ICharacter, IResult } from './servises/types';
 
-function App() {
-  const [count, setCount] = useState(0);
+class App extends React.Component {
+  state: { persons: ICharacter[]; isLoading: boolean } = {
+    persons: [],
+    isLoading: false,
+  };
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  componentDidMount() {
+    const localValue: string = localStorage.getItem('searchInput') || '';
+    this.setState({
+      value: localValue,
+    });
+    localValue == '' ? this.fetchData() : this.handleSubmit();
+  }
+
+  fetchData = async () => {
+    const response: AxiosResponse<IResult> = await axios.get(
+      'https://rickandmortyapi.com/api/character'
+    );
+    const persons = response.data.results;
+    this.setState({ persons });
+  };
+
+  RemoveCard = function () {
+    console.log('remove');
+  };
+
+  handleSubmit = async () => {
+    this.setState({
+      isLoading: true,
+    });
+    const searchValue: string = localStorage.getItem('searchInput') as string;
+    try {
+      const response: AxiosResponse<IResult> = await axios.get(
+        `https://rickandmortyapi.com/api/character/?name=${searchValue}`
+      );
+      const persons = response.data.results;
+      this.setState({ persons });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          const persons: string[] = [];
+          this.setState({ persons });
+        } else console.error(error);
+      }
+    } finally {
+      this.setState({
+        isLoading: false,
+      });
+    }
+  };
+
+  render() {
+    return (
+      <>
+        <h1>React It</h1>
+        <SearchBar text="" fetchData={this.handleSubmit} />
+        <section className="search_results">
+          Results
+          {this.state.isLoading ? 'Loading...' : ''}
+          {this.state.persons.map((person, i) => (
+            <SearchCard key={i} person={person} RemoveCard={this.RemoveCard} />
+          ))}
+        </section>
+      </>
+    );
+  }
 }
 
 export default App;
