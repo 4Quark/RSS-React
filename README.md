@@ -12,7 +12,7 @@ Common commands:
 
 `npm run format:fix`  - fix issues
 
-`npm run format:fix`  - start
+`npm run dev`  - start
 
 There are extra-button with name «Slow» for imitation slow-internet connection so you can see the loader
 
