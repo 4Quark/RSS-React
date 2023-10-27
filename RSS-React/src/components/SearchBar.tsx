@@ -1,6 +1,7 @@
 import React from 'react';
+import RMLogo from './../assets/RMLogo.png';
 
-type myProps = { text: string; fetchData: () => void };
+type myProps = { fetchData: () => void; slowFetch: () => void };
 type myState = { value: string };
 
 class SearchCard extends React.Component<myProps, myState> {
@@ -26,12 +27,21 @@ class SearchCard extends React.Component<myProps, myState> {
   render() {
     return (
       <section className="search_section">
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.props.fetchData}>Search</button>
+        <img className="RMLogo" src={RMLogo} />
+        <div className="search_wrapper">
+          <input
+            className="search_input"
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+          <button className="search_btn" onClick={this.props.fetchData}>
+            Search
+          </button>
+          <button className="search_btn" onClick={this.props.slowFetch}>
+            Slow
+          </button>
+        </div>
       </section>
     );
   }

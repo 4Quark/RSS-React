@@ -3,7 +3,6 @@ import { ICharacter } from '../servises/types';
 
 type myProps = {
   person: ICharacter;
-  RemoveCard: () => void;
 };
 type myState = { count: number };
 
@@ -17,15 +16,24 @@ class SearchCard extends React.Component<myProps, myState> {
 
   render() {
     return (
-      <div className="card_container">
+      <div className="card">
         <div className="card_content">
-          <strong className="card_number">{this.props.person.id}. </strong>
-          <strong className="card_header">{this.props.person.name}</strong>
-          <div className="card_info">{this.props.person.gender}</div>
+          <h3 className="card_head">
+            {this.props.person.id}. {this.props.person.name}
+          </h3>
+          <div className="card_info">
+            <img
+              className="card_img"
+              src={this.props.person.image}
+              alt={this.props.person.name}
+            />
+            <p>gender: {this.props.person.gender}</p>
+            {this.props.person.type && <p>type: {this.props.person.type}</p>}
+            <p>species: {this.props.person.species}</p>
+            <p>status: {this.props.person.status}</p>
+            <p>location: {this.props.person.location.name}</p>
+          </div>
         </div>
-        <button className="card_btn" onClick={this.props.RemoveCard}>
-          Delete
-        </button>
       </div>
     );
   }

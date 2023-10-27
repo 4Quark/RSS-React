@@ -4,6 +4,8 @@ import './App.css';
 import SearchCard from './components/SearchCard';
 import SearchBar from './components/SearchBar';
 import { ICharacter, IResult } from './servises/types';
+import Loader from './components/loader';
+import RickAndMorty from './assets/rick-morty.png';
 
 class App extends React.Component {
   state: { persons: ICharacter[]; isLoading: boolean } = {
@@ -25,6 +27,13 @@ class App extends React.Component {
     );
     const persons = response.data.results;
     this.setState({ persons });
+  };
+
+  slowFetch = async () => {
+    this.setState({
+      isLoading: true,
+    });
+    setTimeout(this.handleSubmit, 1000);
   };
 
   RemoveCard = function () {
@@ -59,15 +68,21 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <h1>React It</h1>
-        <SearchBar text="" fetchData={this.handleSubmit} />
+        <SearchBar fetchData={this.handleSubmit} slowFetch={this.slowFetch} />
         <section className="search_results">
-          Results
-          {this.state.isLoading ? 'Loading...' : ''}
-          {this.state.persons.map((person, i) => (
-            <SearchCard key={i} person={person} RemoveCard={this.RemoveCard} />
-          ))}
+          {this.state.isLoading && <Loader />}
+          <h2>
+            {this.state.persons.length ? 'Results' : 'There is nothing here'}
+          </h2>
+          <div className="card_container">
+            {this.state.persons.map((person, i) => (
+              <SearchCard key={i} person={person} />
+            ))}
+          </div>
         </section>
+        {!this.state.persons.length && (
+          <img className="RickAndMorty" src={RickAndMorty} />
+        )}
       </>
     );
   }
