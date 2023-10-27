@@ -27,7 +27,7 @@ class SearchCard extends React.Component<myProps, myState> {
   render() {
     return (
       <section className="search_section">
-        <img className="RMLogo" src={RMLogo} />
+        <img className="RMLogo" src={RMLogo} alt="Rick and Morty" />
         <div className="search_wrapper">
           <input
             className="search_input"
