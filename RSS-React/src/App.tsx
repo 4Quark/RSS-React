@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar';
 import { ICharacter, IResult } from './servises/types';
 import Loader from './components/loader';
 import RickAndMorty from './assets/rick-morty.png';
+import ErrorBoundary from './servises/ErrorBoundary';
 
 class App extends React.Component {
   state: { persons: ICharacter[]; isLoading: boolean } = {
@@ -34,10 +35,6 @@ class App extends React.Component {
       isLoading: true,
     });
     setTimeout(this.handleSubmit, 1000);
-  };
-
-  RemoveCard = function () {
-    console.log('remove');
   };
 
   handleSubmit = async () => {
@@ -75,9 +72,11 @@ class App extends React.Component {
             {this.state.persons.length ? 'Results' : 'There is nothing here'}
           </h2>
           <div className="card_container">
-            {this.state.persons.map((person, i) => (
-              <SearchCard key={i} person={person} />
-            ))}
+            <ErrorBoundary>
+              {this.state.persons.map((person, i) => (
+                <SearchCard key={i} person={person} />
+              ))}
+            </ErrorBoundary>
           </div>
         </section>
         {!this.state.persons.length && (
