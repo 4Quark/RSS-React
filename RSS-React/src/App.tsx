@@ -3,10 +3,9 @@ import axios, { AxiosResponse } from 'axios';
 import './App.css';
 import SearchCard from './components/SearchCard';
 import SearchBar from './components/SearchBar';
-import { ICharacter, IResult } from './servises/types';
+import { ICharacter, IResult } from './services/types';
 import Loader from './components/loader';
 import RickAndMorty from './assets/rick-morty.png';
-import ErrorBoundary from './servises/ErrorBoundary';
 
 class App extends React.Component {
   state: { persons: ICharacter[]; isLoading: boolean } = {
@@ -72,11 +71,9 @@ class App extends React.Component {
             {this.state.persons.length ? 'Results' : 'There is nothing here'}
           </h2>
           <div className="card_container">
-            <ErrorBoundary>
-              {this.state.persons.map((person, i) => (
-                <SearchCard key={i} person={person} />
-              ))}
-            </ErrorBoundary>
+            {this.state.persons.map((person, i) => (
+              <SearchCard key={i} person={person} />
+            ))}
           </div>
         </section>
         {!this.state.persons.length && (

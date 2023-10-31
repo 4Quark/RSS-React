@@ -1,5 +1,6 @@
 import React from 'react';
 import RMLogo from './../assets/RMLogo.png';
+import ErrorButton from './errorBtn';
 
 type myProps = { fetchData: () => void; slowFetch: () => void };
 type myState = { value: string };
@@ -20,9 +21,12 @@ class SearchCard extends React.Component<myProps, myState> {
 
   handleChange(event: { target: { value: string } }) {
     this.setState({ value: event.target.value });
-    localStorage.setItem('searchInput', event.target.value.trim());
-    console.log(localStorage.getItem('searchInput'));
   }
+
+  search = () => {
+    localStorage.setItem('searchInput', this.state.value.trim());
+    this.props.fetchData();
+  };
 
   render() {
     return (
@@ -35,12 +39,13 @@ class SearchCard extends React.Component<myProps, myState> {
             value={this.state.value}
             onChange={this.handleChange}
           />
-          <button className="search_btn" onClick={this.props.fetchData}>
+          <button className="search_btn" onClick={this.search}>
             Search
           </button>
           <button className="search_btn" onClick={this.props.slowFetch}>
             Slow
           </button>
+          <ErrorButton />
         </div>
       </section>
     );

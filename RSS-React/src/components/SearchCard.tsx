@@ -1,17 +1,13 @@
 import React from 'react';
-import { ICharacter } from '../servises/types';
+import { ICharacter } from '../services/types';
 
 type myProps = {
   person: ICharacter;
 };
-type myState = { count: number };
 
-class SearchCard extends React.Component<myProps, myState> {
+class SearchCard extends React.Component<myProps> {
   constructor(props: myProps) {
     super(props);
-    this.state = {
-      count: 0,
-    };
   }
 
   render() {
