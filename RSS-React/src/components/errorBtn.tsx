@@ -1,32 +1,28 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
-type myState = { hasError: boolean };
+function ErrorButton() {
+  const [error, setError] = useState(false);
 
-class ErrorButton extends React.Component {
-  state: myState = { hasError: false };
-
-  throwError = () => {
+  const throwError = () => {
     throw new Error('Test error from Err button');
   };
 
-  componentDidUpdate = () => {
-    if (this.state.hasError) {
-      this.throwError();
+  useEffect(() => {
+    if (error) {
+      throwError();
     }
-  };
+  });
 
-  render() {
-    return (
-      <button
-        className="error_btn"
-        onClick={() => {
-          this.setState({ hasError: true });
-        }}
-      >
-        Err
-      </button>
-    );
-  }
+  return (
+    <button
+      className="error_btn"
+      onClick={() => {
+        setError(true);
+      }}
+    >
+      Err
+    </button>
+  );
 }
 
 export default ErrorButton;
