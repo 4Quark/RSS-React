@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import RMLogo from './../assets/RMLogo.png';
 import ErrorButton from './errorBtn';
 
@@ -12,7 +12,7 @@ function SearchCard(props: myProps) {
     setValue(localValue);
   }, []);
 
-  const onFormSubmit = (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+  const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.setItem('searchInput', value.trim());
     props.fetchData();
