@@ -4,6 +4,7 @@ import Home from './pages/home';
 import NotFound from './pages/notFound';
 import Layout from './components/layout';
 import SearchPage from './pages/searchPage';
+import PersonPage from './pages/person';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
           <Route path="/search/:page" element={<SearchPage />}></Route>
+          <Route path="/search/:page/:id" element={<PersonPage />}></Route>
           <Route path="/*" element={<NotFound />}></Route>
         </Route>
       </Routes>

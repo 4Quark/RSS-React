@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ICharacter, IResult } from '../services/types';
 import axios, { AxiosResponse } from 'axios';
 import SearchBar from '../components/SearchBar';
@@ -53,7 +53,9 @@ function SearchPage() {
         {isLoading && <Loader />}
         <div className="container">
           {persons.map((person, i) => (
-            <div key={i}>name: {person.name}</div>
+            <Link key={i} to={'/search/' + page + '/' + person.id}>
+              {person.name}
+            </Link>
           ))}
         </div>
       </section>
