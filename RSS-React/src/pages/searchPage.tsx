@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ICharacter, IResult } from '../services/types';
-import axios, { AxiosResponse } from 'axios';
+import { ICharacter } from '../services/types';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/loader';
-// import SearchCard from '../components/SearchBar';
 import RickAndMorty from './../assets/rick-morty.png';
 import Pagination from '../components/pagination';
+import { searchAll } from '../services/API';
 
 function SearchPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,28 +18,14 @@ function SearchPage() {
     console.log('empty');
   }, [page]);
 
+  const handleCallback = (persons: ICharacter[], pages: number) => {
+    setPersons(persons);
+    setTotalPage(pages);
+  };
+
   const search = async () => {
     setIsLoading(true);
-    const localValue: string = localStorage.getItem('searchInput') || '';
-    const link =
-      localValue == ''
-        ? 'https://rickandmortyapi.com/api/character'
-        : `https://rickandmortyapi.com/api/character/?name=${localValue}&page=${page}`;
-    try {
-      const response: AxiosResponse<IResult> = await axios.get(link);
-      const persons = response.data.results;
-      setPersons(persons);
-      setTotalPage(response.data.info.pages);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 404) {
-          const persons: ICharacter[] = [];
-          setPersons(persons);
-        } else console.error(error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    if (page) searchAll(+page, handleCallback).then(() => setIsLoading(false));
   };
 
   const isPage = () => (page ? +page : 1);

@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { ICharacter } from '../services/types';
 import { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import Loader from '../components/loader';
+import { searchCaracter } from '../services/API';
 
 function PersonPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -13,21 +13,11 @@ function PersonPage() {
     search();
   }, []);
 
+  const handlePerson = (person: ICharacter) => setPerson(person);
+
   const search = async () => {
-    console.log('search');
     setIsLoading(true);
-    try {
-      const response: AxiosResponse<ICharacter> = await axios.get(
-        `https://rickandmortyapi.com/api/character/${id}`
-      );
-      setPerson(response.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    if (id) searchCaracter(+id, handlePerson).then(() => setIsLoading(false));
   };
 
   return (
