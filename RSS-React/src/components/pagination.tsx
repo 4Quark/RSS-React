@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import './pagination.css';
+import './../styles/pagination.css';
 
 type myProps = {
   page: number;
