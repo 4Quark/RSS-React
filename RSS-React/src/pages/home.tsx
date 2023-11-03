@@ -1,3 +1,5 @@
+import dance from './../assets/dance.png';
+
 function Home() {
   return (
     <>
@@ -19,6 +21,7 @@ function Home() {
         (Greek). The series is created by Dan Harmon (Community) and Roiland,
         who also serve as executive producers.
       </p>
+      <img className="RM_home" src={dance} alt="Rick and Morty" />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import dont_panic from './../assets/dont_panic.png';
 
 interface Props {
   children?: React.ReactNode;
@@ -26,6 +27,8 @@ class ErrorBoundary extends React.Component<Props, State> {
       return (
         <section>
           <h2>Sorry... there was an error</h2>
+          <img className="dont_panic" src={dont_panic} alt="Don't panic" />
+          <br />
           <button
             className="reload_button"
             onClick={() => {

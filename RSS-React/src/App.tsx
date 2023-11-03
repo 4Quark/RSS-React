@@ -12,8 +12,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
-          <Route path="/search/:page" element={<SearchPage />}></Route>
-          <Route path="/search/:page/:id" element={<PersonPage />}></Route>
+          <Route path="/search/:page" element={<SearchPage />}>
+            <Route path=":id" element={<PersonPage />}></Route>
+          </Route>
           <Route path="/*" element={<NotFound />}></Route>
         </Route>
       </Routes>

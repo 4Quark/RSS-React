@@ -24,7 +24,7 @@ export const searchAll = async (
   const localValue: string = localStorage.getItem('searchInput') || '';
   const link =
     localValue == ''
-      ? 'https://rickandmortyapi.com/api/character'
+      ? `https://rickandmortyapi.com/api/character/?page=${page}`
       : `https://rickandmortyapi.com/api/character/?name=${localValue}&page=${page}`;
   try {
     const response: AxiosResponse<IResult> = await axios.get(link);

@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ICharacter } from '../services/types';
 import { useEffect, useState } from 'react';
 import Loader from '../components/loader';
@@ -7,41 +7,41 @@ import { searchCaracter } from '../services/API';
 function PersonPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [person, setPerson] = useState<ICharacter>();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    search();
-  }, []);
+    setIsLoading(true);
+    if (id) searchCaracter(+id, handlePerson).then(() => setIsLoading(false));
+  }, [id]);
 
   const handlePerson = (person: ICharacter) => setPerson(person);
 
-  const search = async () => {
-    setIsLoading(true);
-    if (id) searchCaracter(+id, handlePerson).then(() => setIsLoading(false));
-  };
-
   return (
-    <>
+    <section className="each_character">
       {isLoading && <Loader />}
       {person && (
         <div className="person_container">
-          <h3 className="person_head">
-            {person.id}. {person.name}
-          </h3>
+          <img className="person_img" src={person.image} alt={person.name} />
           <div className="person_info">
-            <img className="person_img" src={person.image} alt={person.name} />
-            <p>gender: {person.gender}</p>
-            {person.type && <p>type: {person.type}</p>}
-            <p>species: {person.species}</p>
-            <p>status: {person.status}</p>
-            <p>location: {person.location.name}</p>
+            <h3 className="person_head">
+              {person.id}. {person.name}
+            </h3>
+            <p>Gender: {person.gender}</p>
+            {person.type ? <p>type: {person.type}</p> : <p>No type</p>}
+            <p>Species: {person.species}</p>
+            <p>Status: {person.status}</p>
+            <p>Location: {person.location.name}</p>
+            <p>Origin: {person.origin.name}</p>
+            <p>URL: {person.url}</p>
+            <p>Created: {person.created}</p>
           </div>
         </div>
       )}
-      {/* <h1>{person.name}</h1>
-      <p>{person.gender}</p> */}
-      <Link to="/">go to Home</Link>
-    </>
+      <button className="go_back_btn" onClick={() => navigate(-1)}>
+        go Back
+      </button>
+    </section>
   );
 }
 

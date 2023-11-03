@@ -12,7 +12,6 @@ function Layout() {
         </div>
       </header>
       <Outlet />
-      <footer>2023</footer>
     </>
   );
 }

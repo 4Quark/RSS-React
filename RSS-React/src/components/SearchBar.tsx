@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react';
 import ErrorButton from './errorBtn';
+import { useNavigate } from 'react-router-dom';
 
 type myProps = { fetchData: () => void };
 
 function SearchCard(props: myProps) {
   const [value, setValue] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const localValue: string = localStorage.getItem('searchInput') || '';
@@ -13,6 +15,7 @@ function SearchCard(props: myProps) {
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    navigate('/search/1');
     localStorage.setItem('searchInput', value.trim());
     props.fetchData();
   };
