@@ -27,6 +27,7 @@
   width: 70%;
   height: 70%;
   overflow: hidden;
+  position: relative;
 }
 
 .person_container {
@@ -47,6 +48,24 @@
 .go_back_btn {
   background-color: rgba(127, 255, 212, 0.306);
   width: 200px;
+}
+
+.close_btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: 1px solid rgb(7, 173, 176);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  color: rgb(7, 173, 176);
+  padding: 0;
+}
+
+.close_btn:hover {
+  cursor: pointer;
+  color: #646cff;
 }
 
 
