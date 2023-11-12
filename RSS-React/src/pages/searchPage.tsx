@@ -47,7 +47,11 @@ function SearchPage() {
             ) : (
               <div className="container">
                 {persons.map((person, i) => (
-                  <Link key={i} to={'/search/' + page + '/' + person.id}>
+                  <Link
+                    key={i}
+                    data-testid="person-element"
+                    to={'/search/' + page + '/' + person.id}
+                  >
                     {person.name}
                   </Link>
                 ))}
