@@ -12,8 +12,10 @@ Common commands:
 
 `npm run format:fix`  - fix issues
 
-`npm run dev`  - start
+`npm run dev`  - start server
 
-There are extra-button with name «Slow» for imitation slow-internet connection so you can see the loader
+`npm run test`  - start tests
 
-Deploy here:  [super-trifle.netlify.app](https://merry-begonia-9cb255.netlify.app)
+`npm run coverage`  - tests coverage
+
+Deploy here:  [effervescent-stroopwafel.netlify.app](https://effervescent-stroopwafel-7143d2.netlify.app)
