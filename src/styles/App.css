@@ -22,12 +22,12 @@ header {
 header::after {
   font-weight: 800;
   position: absolute;
-  content: '';
+  content: "";
   left: 0;
   bottom: 0px;
   width: 100%;
   height: 2px;
-  background: linear-gradient(91deg,transparent 0%, rgb(7, 173, 176) 67%);;
+  background: linear-gradient(91deg, transparent 0%, rgb(7, 173, 176) 67%);
 }
 
 .RMLogo {

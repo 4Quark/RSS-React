@@ -31,7 +31,7 @@ a:hover {
 .active::after {
   font-weight: 800;
   position: absolute;
-  content: '';
+  content: "";
   left: 22px;
   bottom: -6px;
   width: 60%;
