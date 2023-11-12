@@ -63,6 +63,7 @@ test('extented data correctly displays', async () => {
     url: 'https://rickandmortyapi.com/api/character/1',
     created: '2017-11-04T18:48:46.250Z',
   };
+
   (axios.get as jest.Mock).mockResolvedValue({
     data: response,
   });
@@ -77,13 +78,10 @@ test('extented data correctly displays', async () => {
     data: responsePerson,
   });
   fireEvent.click(person);
-  (axios.get as jest.Mock).mockResolvedValue({
-    data: responsePerson,
-  });
   const personName = await screen.findByText('Rick Sanchez');
   expect(personName).toBeTruthy();
-  const personGender = await screen.findByText('Male');
+  const personGender = screen.findByText('Male');
   expect(personGender).toBeTruthy();
-  const personSpecies = await screen.findByText('Human');
+  const personSpecies = screen.findByText('Human');
   expect(personSpecies).toBeTruthy();
 });

@@ -5,7 +5,7 @@ import { SearchContext } from '../services/context';
 
 type myProps = { fetchData: () => void };
 
-function SearchCard(props: myProps) {
+function SearchBar(props: myProps) {
   const { setValue } = useContext(SearchContext);
   const { value } = useContext(SearchContext);
   const navigate = useNavigate();
@@ -40,4 +40,4 @@ function SearchCard(props: myProps) {
   );
 }
 
-export default SearchCard;
+export default SearchBar;

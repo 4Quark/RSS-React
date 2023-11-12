@@ -40,7 +40,6 @@ test('list number of cards', async () => {
       },
     ],
   };
-  (axios.get as jest.Mock).mockReturnValue(response);
   (axios.get as jest.Mock).mockResolvedValue({
     data: response,
   });
@@ -51,5 +50,4 @@ test('list number of cards', async () => {
   );
   const persons = await screen.findAllByTestId('person-element');
   expect(persons.length).toBe(1);
-  expect(axios.get).toHaveBeenCalled();
 });

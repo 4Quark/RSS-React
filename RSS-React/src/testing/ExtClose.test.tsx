@@ -63,7 +63,7 @@ test('extended card close', async () => {
     url: 'https://rickandmortyapi.com/api/character/1',
     created: '2017-11-04T18:48:46.250Z',
   };
-  (axios.get as jest.Mock).mockReturnValue(response);
+
   (axios.get as jest.Mock).mockResolvedValue({
     data: response,
   });
@@ -78,12 +78,9 @@ test('extended card close', async () => {
     data: responsePerson,
   });
   fireEvent.click(person);
-  (axios.get as jest.Mock).mockResolvedValue({
-    data: responsePerson,
-  });
   const closeBtn = await screen.findByText('×');
   expect(closeBtn).toBeTruthy();
   fireEvent.click(closeBtn);
-  const closeBtnNew = await screen.queryByText('×');
-  expect(closeBtnNew).toBeNull();
+  const extended = await screen.queryByTestId('extended_data');
+  expect(extended).toBeNull();
 });
