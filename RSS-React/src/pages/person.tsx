@@ -19,7 +19,7 @@ function PersonPage() {
   const handlePerson = (person: ICharacter) => setPerson(person);
 
   return (
-    <section className="each_character">
+    <section className="each_character" data-testid="extended_data">
       {isLoading ? (
         <Loader />
       ) : (
