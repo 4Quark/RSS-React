@@ -1,20 +1,29 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { ICharacter } from '../services/types';
+import { ICharacter, RootState } from '../services/types';
 import { useEffect, useState } from 'react';
 import Loader from '../components/loader';
 import { searchCaracter } from '../services/API';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  startExtraLoader,
+  stopExtraLoader,
+} from '../services/store/loadersReducer';
 
 function PersonPage() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const isLoading = useSelector(
+    (state: RootState) => state.loaders.extraLoader
+  );
   const [person, setPerson] = useState<ICharacter>();
   const navigate = useNavigate();
   const { page } = useParams();
   const { id } = useParams();
 
   useEffect(() => {
-    setIsLoading(true);
-    if (id) searchCaracter(+id, handlePerson).then(() => setIsLoading(false));
-  }, [id]);
+    dispatch(startExtraLoader());
+    if (id)
+      searchCaracter(+id, handlePerson).then(() => dispatch(stopExtraLoader()));
+  }, [dispatch, id]);
 
   const handlePerson = (person: ICharacter) => setPerson(person);
 

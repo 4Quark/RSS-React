@@ -43,8 +43,14 @@ export interface IValueState {
   searchValue: string;
 }
 
+export interface ILoaderState {
+  mainLoader: boolean;
+  extraLoader: boolean;
+}
+
 export type RootState = EmptyObject & {
   count: ICounterState;
   value: IValueState;
   characters: ICharacterState;
+  loaders: ILoaderState;
 };

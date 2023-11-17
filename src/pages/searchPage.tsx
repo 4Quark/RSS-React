@@ -8,14 +8,18 @@ import RickAndMorty from './../assets/rick-morty.png';
 import Pagination from '../components/pagination';
 import { searchAll } from '../services/API';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  startMainLoader,
+  stopMainLoader,
+} from '../services/store/loadersReducer';
 
 function SearchPage() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [totalPage, setTotalPage] = useState<number>(1);
   const dispatch = useDispatch();
   const characters = useSelector(
     (state: RootState) => state.characters.characters
   );
+  const isLoading = useSelector((state: RootState) => state.loaders.mainLoader);
   const { page } = useParams();
 
   const handleCallback = useCallback(
@@ -27,15 +31,15 @@ function SearchPage() {
   );
 
   useEffect(() => {
-    setIsLoading(true);
+    dispatch(startMainLoader());
     if (page) {
-      searchAll(+page, handleCallback).then(() => setIsLoading(false));
+      searchAll(+page, handleCallback).then(() => dispatch(stopMainLoader()));
     }
-  }, [handleCallback, page]);
+  }, [dispatch, handleCallback, page]);
 
   const search = async () => {
-    setIsLoading(true);
-    searchAll(1, handleCallback).then(() => setIsLoading(false));
+    dispatch(startMainLoader());
+    searchAll(1, handleCallback).then(() => dispatch(stopMainLoader()));
   };
 
   const isPage = () => (page ? +page : 1);
