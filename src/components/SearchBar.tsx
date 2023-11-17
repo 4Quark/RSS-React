@@ -1,24 +1,27 @@
-import { FormEvent, useContext, useEffect } from 'react';
+import { FormEvent, useEffect } from 'react';
 import ErrorButton from './errorBtn';
 import { useNavigate } from 'react-router-dom';
-import { SearchContext } from '../services/context';
+import { RootState } from '../services/store/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 type myProps = { fetchData: () => void };
 
 function SearchBar(props: myProps) {
-  const { setValue } = useContext(SearchContext);
-  const { value } = useContext(SearchContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const searchValue = useSelector(
+    (state: RootState) => state.value.searchValue
+  );
 
   useEffect(() => {
     const localValue: string = localStorage.getItem('searchInput') || '';
-    setValue(localValue);
-  }, [setValue]);
+    dispatch({ type: 'NEW_VALUE', payload: localValue });
+  }, [dispatch]);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/search/1');
-    localStorage.setItem('searchInput', value.trim());
+    localStorage.setItem('searchInput', searchValue.trim());
     props.fetchData();
   };
 
@@ -28,8 +31,10 @@ function SearchBar(props: myProps) {
         <input
           className="search_input"
           type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value.trim())}
+          value={searchValue}
+          onChange={(e) =>
+            dispatch({ type: 'NEW_VALUE', payload: e.target.value })
+          }
         />
         <button type="submit" className="search_btn">
           Search

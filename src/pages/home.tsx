@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import dance from './../assets/dance.png';
-import { RootState } from '../services/store';
+import { RootState } from '../services/store/store';
 
 function Home() {
   const dispatch = useDispatch();
-  const homeCounter = useSelector((state: RootState) => state.homeCounter);
-  console.log(homeCounter);
+  const homeCounter = useSelector(
+    (state: RootState) => state.count.homeCounter
+  );
 
   return (
     <>

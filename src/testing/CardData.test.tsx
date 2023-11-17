@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
+import { Provider } from 'react-redux';
+import { store } from '../services/store/store';
 
 vi.mock('axios');
 
@@ -28,7 +30,9 @@ test('card relevant data', async () => {
   });
   render(
     <MemoryRouter initialEntries={['/search/1']}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MemoryRouter>
   );
   const person = await screen.findByText('Rick Sanchez');

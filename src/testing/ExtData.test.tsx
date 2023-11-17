@@ -3,6 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
+import { Provider } from 'react-redux';
+import { store } from '../services/store/store';
 
 vi.mock('axios');
 
@@ -69,7 +71,9 @@ test('extented data correctly displays', async () => {
   });
   render(
     <MemoryRouter initialEntries={['/search/1']}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </MemoryRouter>
   );
   const person = await screen.findByText('Rick Sanchez');

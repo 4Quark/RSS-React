@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SearchPage from '../pages/searchPage';
 import { vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { store } from '../services/store/store';
 
 const LSMock = {
   getItem: vi.fn(),
@@ -13,7 +15,9 @@ Object.defineProperty(window, 'localStorage', { value: LSMock });
 test('search saves the entered value to the local storage', () => {
   render(
     <MemoryRouter>
-      <SearchPage />
+      <Provider store={store}>
+        <SearchPage />
+      </Provider>
     </MemoryRouter>
   );
   const searchBtn = screen.getByText('Search');
@@ -29,7 +33,9 @@ test('search saves the entered value to the local storage', () => {
 test('search value from the local storage', () => {
   render(
     <MemoryRouter>
-      <SearchPage />
+      <Provider store={store}>
+        <SearchPage />
+      </Provider>
     </MemoryRouter>
   );
   expect(localStorage.getItem).toHaveBeenCalled();

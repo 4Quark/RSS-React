@@ -1,16 +1,14 @@
-import { PayloadAction, createStore } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 interface IState {
   homeCounter: number;
 }
 
-export type RootState = ReturnType<typeof store.getState>;
-
 const defaultState: IState = {
   homeCounter: 0,
 };
 
-const reducer = (
+export const countReducer = (
   state = defaultState,
   action: PayloadAction<{ homeCounter: number }>
 ) => {
@@ -23,5 +21,3 @@ const reducer = (
       return state;
   }
 };
-
-export const store = createStore(reducer);

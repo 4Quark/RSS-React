@@ -7,10 +7,8 @@ import Loader from '../components/loader';
 import RickAndMorty from './../assets/rick-morty.png';
 import Pagination from '../components/pagination';
 import { searchAll } from '../services/API';
-import { SearchProvider } from '../services/context';
 
 function SearchPage() {
-  const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [persons, setPersons] = useState<ICharacter[]>([]);
@@ -37,36 +35,34 @@ function SearchPage() {
 
   return (
     <>
-      <SearchProvider value={{ value, setValue, persons, setPersons }}>
-        <SearchBar fetchData={search} />
-        <div className="search_container">
-          <section className="search_results">
-            <h2>{persons.length ? 'Results' : 'There is nothing here'}</h2>
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <div className="container">
-                {persons.map((person, i) => (
-                  <Link
-                    key={i}
-                    data-testid="person-element"
-                    to={'/search/' + page + '/' + person.id}
-                  >
-                    {person.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-            {persons.length ? (
-              <Pagination page={isPage()} totalPage={totalPage} />
-            ) : (
-              ''
-            )}
-          </section>
-          {persons.length ? <Outlet /> : ''}
-        </div>
-        {!persons.length && <img className="RickAndMorty" src={RickAndMorty} />}
-      </SearchProvider>
+      <SearchBar fetchData={search} />
+      <div className="search_container">
+        <section className="search_results">
+          <h2>{persons.length ? 'Results' : 'There is nothing here'}</h2>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="container">
+              {persons.map((person, i) => (
+                <Link
+                  key={i}
+                  data-testid="person-element"
+                  to={'/search/' + page + '/' + person.id}
+                >
+                  {person.name}
+                </Link>
+              ))}
+            </div>
+          )}
+          {persons.length ? (
+            <Pagination page={isPage()} totalPage={totalPage} />
+          ) : (
+            ''
+          )}
+        </section>
+        {persons.length ? <Outlet /> : ''}
+      </div>
+      {!persons.length && <img className="RickAndMorty" src={RickAndMorty} />}
     </>
   );
 }
