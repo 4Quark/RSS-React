@@ -1,10 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { IValueState } from '../types';
 
-interface IState {
-  searchValue: string;
-}
-
-const defaultState: IState = {
+const defaultState: IValueState = {
   searchValue: '',
 };
 

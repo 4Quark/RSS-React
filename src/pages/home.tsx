@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import dance from './../assets/dance.png';
-import { RootState } from '../services/store/store';
 import { decrement, increment } from '../services/store/countReducer';
+import { RootState } from '../services/types';
 
 function Home() {
   const dispatch = useDispatch();

@@ -1,3 +1,5 @@
+import { EmptyObject } from '@reduxjs/toolkit';
+
 export interface ICharacter {
   id: number;
   name: string;
@@ -28,3 +30,21 @@ export interface IResult {
   };
   results: ICharacter[];
 }
+
+export interface ICharacterState {
+  characters: ICharacter[];
+}
+
+export interface ICounterState {
+  homeCounter: number;
+}
+
+export interface IValueState {
+  searchValue: string;
+}
+
+export type RootState = EmptyObject & {
+  count: ICounterState;
+  value: IValueState;
+  characters: ICharacterState;
+};

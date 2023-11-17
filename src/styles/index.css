@@ -61,6 +61,10 @@ button {
 button:hover {
   border-color: #646cff;
 }
+button:disabled {
+  border: 2px solid transparent;
+  cursor: default;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

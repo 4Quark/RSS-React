@@ -1,30 +1,37 @@
 import './../styles/search.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { ICharacter } from '../services/types';
+import { ICharacter, RootState } from '../services/types';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/loader';
 import RickAndMorty from './../assets/rick-morty.png';
 import Pagination from '../components/pagination';
 import { searchAll } from '../services/API';
+import { useDispatch, useSelector } from 'react-redux';
 
 function SearchPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [totalPage, setTotalPage] = useState<number>(1);
-  const [persons, setPersons] = useState<ICharacter[]>([]);
+  const dispatch = useDispatch();
+  const characters = useSelector(
+    (state: RootState) => state.characters.characters
+  );
   const { page } = useParams();
+
+  const handleCallback = useCallback(
+    (persons: ICharacter[], pages: number) => {
+      dispatch({ type: 'SET_CHARACTERS', payload: persons });
+      setTotalPage(pages);
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     setIsLoading(true);
     if (page) {
       searchAll(+page, handleCallback).then(() => setIsLoading(false));
     }
-  }, [page]);
-
-  const handleCallback = (persons: ICharacter[], pages: number) => {
-    setPersons(persons);
-    setTotalPage(pages);
-  };
+  }, [handleCallback, page]);
 
   const search = async () => {
     setIsLoading(true);
@@ -38,12 +45,12 @@ function SearchPage() {
       <SearchBar fetchData={search} />
       <div className="search_container">
         <section className="search_results">
-          <h2>{persons.length ? 'Results' : 'There is nothing here'}</h2>
+          <h2>{characters.length ? 'Results' : 'There is nothing here'}</h2>
           {isLoading ? (
             <Loader />
           ) : (
             <div className="container">
-              {persons.map((person, i) => (
+              {characters.map((person: ICharacter, i: number) => (
                 <Link
                   key={i}
                   data-testid="person-element"
@@ -54,15 +61,17 @@ function SearchPage() {
               ))}
             </div>
           )}
-          {persons.length ? (
+          {characters.length ? (
             <Pagination page={isPage()} totalPage={totalPage} />
           ) : (
             ''
           )}
         </section>
-        {persons.length ? <Outlet /> : ''}
+        {characters.length ? <Outlet /> : ''}
       </div>
-      {!persons.length && <img className="RickAndMorty" src={RickAndMorty} />}
+      {!characters.length && (
+        <img className="RickAndMorty" src={RickAndMorty} />
+      )}
     </>
   );
 }

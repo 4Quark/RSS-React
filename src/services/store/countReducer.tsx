@@ -1,10 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import { ICounterState } from '../types';
 
-interface IState {
-  homeCounter: number;
-}
-
-const defaultState: IState = {
+const defaultState: ICounterState = {
   homeCounter: 0,
 };
 

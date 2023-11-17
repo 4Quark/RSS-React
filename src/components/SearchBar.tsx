@@ -1,9 +1,9 @@
 import { FormEvent, useEffect } from 'react';
 import ErrorButton from './errorBtn';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../services/store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSearch } from '../services/store/valueReducer';
+import { RootState } from '../services/types';
 
 type myProps = { fetchData: () => void };
 
