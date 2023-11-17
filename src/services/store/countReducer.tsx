@@ -8,6 +8,9 @@ const defaultState: IState = {
   homeCounter: 0,
 };
 
+export const decrement = () => ({ type: 'LESS_COUNTS' });
+export const increment = () => ({ type: 'MORE_COUNTS' });
+
 export const countReducer = (
   state = defaultState,
   action: PayloadAction<{ homeCounter: number }>

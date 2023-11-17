@@ -8,6 +8,11 @@ const defaultState: IState = {
   searchValue: '',
 };
 
+export const updateSearch = (payload: string) => ({
+  type: 'NEW_VALUE',
+  payload,
+});
+
 export const valueReducer = (
   state = defaultState,
   action: PayloadAction<{ searchValue: string }>

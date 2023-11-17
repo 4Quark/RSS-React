@@ -3,6 +3,7 @@ import ErrorButton from './errorBtn';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../services/store/store';
 import { useDispatch, useSelector } from 'react-redux';
+import { updateSearch } from '../services/store/valueReducer';
 
 type myProps = { fetchData: () => void };
 
@@ -15,7 +16,7 @@ function SearchBar(props: myProps) {
 
   useEffect(() => {
     const localValue: string = localStorage.getItem('searchInput') || '';
-    dispatch({ type: 'NEW_VALUE', payload: localValue });
+    dispatch(updateSearch(localValue));
   }, [dispatch]);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -32,9 +33,7 @@ function SearchBar(props: myProps) {
           className="search_input"
           type="text"
           value={searchValue}
-          onChange={(e) =>
-            dispatch({ type: 'NEW_VALUE', payload: e.target.value })
-          }
+          onChange={(e) => dispatch(updateSearch(e.target.value))}
         />
         <button type="submit" className="search_btn">
           Search

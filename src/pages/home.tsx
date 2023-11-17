@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import dance from './../assets/dance.png';
 import { RootState } from '../services/store/store';
+import { decrement, increment } from '../services/store/countReducer';
 
 function Home() {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ function Home() {
         who also serve as executive producers.
       </p>
       <div className="buttons_holder">
-        <button onClick={() => dispatch({ type: 'LESS_COUNTS' })}> - </button>
+        <button onClick={() => dispatch(decrement())}> - </button>
         <div>{homeCounter}</div>
-        <button onClick={() => dispatch({ type: 'MORE_COUNTS' })}> + </button>
+        <button onClick={() => dispatch(increment())}> + </button>
       </div>
       <img className="RM_home" src={dance} alt="Rick and Morty" />
     </>
