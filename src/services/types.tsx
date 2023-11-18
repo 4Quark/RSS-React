@@ -35,10 +35,6 @@ export interface ICharacterState {
   error: string;
 }
 
-export interface ICounterState {
-  homeCounter: number;
-}
-
 export interface IValueState {
   searchValue: string;
 }

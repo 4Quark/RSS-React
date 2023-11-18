@@ -1,13 +1,6 @@
 import dance from './../assets/dance.png';
-import { useAppDispatch, useAppSelector } from '../services/store/store';
-import { countSlice } from '../services/store/countReducer';
 
 function Home() {
-  const dispatch = useAppDispatch();
-  const homeCounter = useAppSelector((state) => state.count.homeCounter);
-  const { increment } = countSlice.actions;
-  const { decrement } = countSlice.actions;
-
   return (
     <>
       <h1>Home Rick and Morty</h1>
@@ -28,11 +21,6 @@ function Home() {
         (Greek). The series is created by Dan Harmon (Community) and Roiland,
         who also serve as executive producers.
       </p>
-      <div className="buttons_holder">
-        <button onClick={() => dispatch(decrement())}> - </button>
-        <div>{homeCounter}</div>
-        <button onClick={() => dispatch(increment())}> + </button>
-      </div>
       <img className="RM_home" src={dance} alt="Rick and Morty" />
     </>
   );
