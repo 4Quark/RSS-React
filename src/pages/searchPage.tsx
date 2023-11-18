@@ -13,11 +13,12 @@ function SearchPage() {
   const totalPage = useAppSelector((state) => state.pages.totalPages);
   const dispatch = useAppDispatch();
   const { characters, isLoading } = useAppSelector((state) => state.characters);
+  const itemsPerPage = useAppSelector((state) => state.pages.itemsPerPage);
   const { page } = useParams();
 
   useEffect(() => {
     if (page) dispatch(fetchCharacters(+page));
-  }, [dispatch, page]);
+  }, [dispatch, page, itemsPerPage]);
 
   const search = async () => {
     if (page) dispatch(fetchCharacters(+page));
@@ -35,15 +36,18 @@ function SearchPage() {
             <Loader />
           ) : (
             <div className="container">
-              {characters.map((person: ICharacter, i: number) => (
-                <Link
-                  key={i}
-                  data-testid="person-element"
-                  to={'/search/' + page + '/' + person.id}
-                >
-                  {person.name}
-                </Link>
-              ))}
+              {characters.map(
+                (person: ICharacter, i: number) =>
+                  i < itemsPerPage && (
+                    <Link
+                      key={i}
+                      data-testid="person-element"
+                      to={'/search/' + page + '/' + person.id}
+                    >
+                      {person.name}
+                    </Link>
+                  )
+              )}
             </div>
           )}
           {characters.length ? (

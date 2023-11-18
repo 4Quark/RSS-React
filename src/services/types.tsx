@@ -50,6 +50,7 @@ export interface ILoaderState {
 
 export interface IPaginationState {
   totalPages: number;
+  itemsPerPage: number;
 }
 
 export interface ISingleState {
