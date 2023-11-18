@@ -2,26 +2,27 @@ import { FormEvent, useEffect, useState } from 'react';
 import ErrorButton from './errorBtn';
 import { useNavigate } from 'react-router-dom';
 import { searchSlice } from '../services/store/valueReducer';
-import { useAppDispatch } from '../services/store/store';
+import { useAppDispatch, useAppSelector } from '../services/store/store';
 
 type myProps = { fetchData: () => void };
 
 function SearchBar(props: myProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const searchValue = useAppSelector((state) => state.value.searchValue);
   const { updateSearch } = searchSlice.actions;
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    const localValue: string = localStorage.getItem('searchInput') || '';
-    dispatch(updateSearch(localValue));
-  }, [dispatch, updateSearch]);
+    setInputValue(searchValue);
+  }, [searchValue]);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/search/1');
-    if (inputValue) localStorage.setItem('searchInput', inputValue.trim());
-    if (inputValue) dispatch(updateSearch(inputValue));
+    if (inputValue) {
+      dispatch(updateSearch(inputValue.trim()));
+    } else dispatch(updateSearch(''));
     props.fetchData();
   };
 

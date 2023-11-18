@@ -14,14 +14,15 @@ function SearchPage() {
   const dispatch = useAppDispatch();
   const { characters, isLoading } = useAppSelector((state) => state.characters);
   const itemsPerPage = useAppSelector((state) => state.pages.itemsPerPage);
+  const searchValue = useAppSelector((state) => state.value.searchValue);
   const { page } = useParams();
 
   useEffect(() => {
-    if (page) dispatch(fetchCharacters(+page));
-  }, [dispatch, page, itemsPerPage]);
+    if (page) dispatch(fetchCharacters(+page, searchValue));
+  }, [dispatch, page, itemsPerPage, searchValue]);
 
   const search = async () => {
-    if (page) dispatch(fetchCharacters(+page));
+    if (page) dispatch(fetchCharacters(+page, searchValue));
   };
 
   const isPage = () => (page ? +page : 1);

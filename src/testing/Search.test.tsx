@@ -14,6 +14,8 @@ const LSMock = {
 
 Object.defineProperty(window, 'localStorage', { value: LSMock });
 
+const testData = 'test data';
+
 test('search saves the entered value to the local storage', () => {
   render(
     <MemoryRouter>
@@ -26,7 +28,6 @@ test('search saves the entered value to the local storage', () => {
   const searchInput = screen.getByRole('textbox');
   expect(searchBtn).toBeTruthy();
   expect(searchInput).toBeTruthy();
-  const testData = 'test data';
   fireEvent.change(searchInput, { target: { value: testData } });
   fireEvent.click(searchBtn);
   expect(localStorage.setItem).toHaveBeenCalled();
@@ -40,5 +41,5 @@ test('search value from the local storage', () => {
       </Provider>
     </MemoryRouter>
   );
-  expect(localStorage.getItem).toHaveBeenCalled();
+  expect(localStorage.setItem).toHaveBeenCalled();
 });

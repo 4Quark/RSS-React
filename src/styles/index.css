@@ -74,7 +74,7 @@ select {
   font-size: 1em;
   border: 2px solid #cfcfcf;
   transition: border-color 0.25s;
-  background-color: #fff;
+  background-color: #000000;
 }
 select:hover {
   border-color: #646cff;
@@ -90,5 +90,9 @@ select:hover {
   }
   button {
     background-color: #f9f9f9;
+  }
+  select {
+    color: #213547;
+    background-color: #ffffff;
   }
 }

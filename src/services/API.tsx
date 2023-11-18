@@ -6,14 +6,13 @@ import { pagesSlice } from './store/paginationReducer';
 import { singleSlice } from './store/singleReducer';
 
 export const fetchCharacters =
-  (page: number) => async (dispatch: AppDispatch) => {
+  (page: number, search: string) => async (dispatch: AppDispatch) => {
     try {
       dispatch(charactersSlice.actions.charactersFetching());
-      const localValue: string = localStorage.getItem('searchInput') || '';
       const link =
-        localValue == ''
+        search == ''
           ? `https://rickandmortyapi.com/api/character/?page=${page}`
-          : `https://rickandmortyapi.com/api/character/?name=${localValue}&page=${page}`;
+          : `https://rickandmortyapi.com/api/character/?name=${search}&page=${page}`;
       const response: AxiosResponse<IResult> = await axios.get(link);
       dispatch(
         charactersSlice.actions.charactersFetchingSuccess(response.data.results)
