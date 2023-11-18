@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
 import dance from './../assets/dance.png';
-import { decrement, increment } from '../services/store/countReducer';
-import { RootState } from '../services/types';
+import { useAppDispatch, useAppSelector } from '../services/store/store';
+import { countSlice } from '../services/store/countReducer';
 
 function Home() {
-  const dispatch = useDispatch();
-  const homeCounter = useSelector(
-    (state: RootState) => state.count.homeCounter
-  );
+  const dispatch = useAppDispatch();
+  const homeCounter = useAppSelector((state) => state.count.homeCounter);
+  const { increment } = countSlice.actions;
+  const { decrement } = countSlice.actions;
 
   return (
     <>

@@ -3,7 +3,9 @@ import { MemoryRouter } from 'react-router-dom';
 import SearchPage from '../pages/searchPage';
 import { vi } from 'vitest';
 import { Provider } from 'react-redux';
-import { store } from '../services/store/store';
+import { setupStore } from '../services/store/store';
+
+const store = setupStore();
 
 const LSMock = {
   getItem: vi.fn(),

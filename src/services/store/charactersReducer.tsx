@@ -1,23 +1,30 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ICharacter, ICharacterState } from '../types';
 
 const defaultState: ICharacterState = {
   characters: [],
+  isLoading: false,
+  error: '',
 };
 
-export const updateCharacters = (payload: ICharacter[]) => ({
-  type: 'SET_CHARACTERS',
-  payload,
+export const charactersSlice = createSlice({
+  name: 'characters',
+  initialState: defaultState,
+  reducers: {
+    charactersFetching(state) {
+      state.isLoading = true;
+    },
+    charactersFetchingSuccess(state, action: PayloadAction<ICharacter[]>) {
+      state.isLoading = false;
+      state.error = '';
+      state.characters = action.payload;
+    },
+    charactersFetchingError(state, action: PayloadAction<string>) {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.characters = [];
+    },
+  },
 });
 
-export const charactersReducer = (
-  state = defaultState,
-  action: PayloadAction<{ characters: ICharacter[] }>
-) => {
-  switch (action.type) {
-    case 'SET_CHARACTERS':
-      return { ...state, characters: action.payload };
-    default:
-      return state;
-  }
-};
+export default charactersSlice.reducer;

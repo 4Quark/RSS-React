@@ -1,28 +1,27 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import ErrorButton from './errorBtn';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateSearch } from '../services/store/valueReducer';
-import { RootState } from '../services/types';
+import { searchSlice } from '../services/store/valueReducer';
+import { useAppDispatch } from '../services/store/store';
 
 type myProps = { fetchData: () => void };
 
 function SearchBar(props: myProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const searchValue = useSelector(
-    (state: RootState) => state.value.searchValue
-  );
+  const dispatch = useAppDispatch();
+  const { updateSearch } = searchSlice.actions;
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     const localValue: string = localStorage.getItem('searchInput') || '';
     dispatch(updateSearch(localValue));
-  }, [dispatch]);
+  }, [dispatch, updateSearch]);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/search/1');
-    localStorage.setItem('searchInput', searchValue.trim());
+    if (inputValue) localStorage.setItem('searchInput', inputValue.trim());
+    if (inputValue) dispatch(updateSearch(inputValue));
     props.fetchData();
   };
 
@@ -32,8 +31,8 @@ function SearchBar(props: myProps) {
         <input
           className="search_input"
           type="text"
-          value={searchValue}
-          onChange={(e) => dispatch(updateSearch(e.target.value))}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
         <button type="submit" className="search_btn">
           Search

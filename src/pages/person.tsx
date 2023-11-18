@@ -1,31 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { ICharacter, RootState } from '../services/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Loader from '../components/loader';
-import { searchCaracter } from '../services/API';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  startExtraLoader,
-  stopExtraLoader,
-} from '../services/store/loadersReducer';
+import { fetchSingle } from '../services/API';
+import { useAppDispatch, useAppSelector } from '../services/store/store';
 
 function PersonPage() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector(
-    (state: RootState) => state.loaders.extraLoader
-  );
-  const [person, setPerson] = useState<ICharacter>();
+  const dispatch = useAppDispatch();
+  const { character, isLoading } = useAppSelector((state) => state.single);
   const navigate = useNavigate();
   const { page } = useParams();
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(startExtraLoader());
-    if (id)
-      searchCaracter(+id, handlePerson).then(() => dispatch(stopExtraLoader()));
+    if (id) dispatch(fetchSingle(+id));
   }, [dispatch, id]);
-
-  const handlePerson = (person: ICharacter) => setPerson(person);
 
   return (
     <section className="each_character" data-testid="extended_data">
@@ -33,25 +21,29 @@ function PersonPage() {
         <Loader />
       ) : (
         <>
-          {person && (
+          {character && (
             <div className="person_container">
               <img
                 className="person_img"
-                src={person.image}
-                alt={person.name}
+                src={character.image}
+                alt={character.name}
               />
               <div className="person_info">
                 <h3 className="person_head">
-                  {person.id}. {person.name}
+                  {character.id}. {character.name}
                 </h3>
-                <p>Gender: {person.gender}</p>
-                {person.type ? <p>type: {person.type}</p> : <p>No type</p>}
-                <p>Species: {person.species}</p>
-                <p>Status: {person.status}</p>
-                <p>Location: {person.location.name}</p>
-                <p>Origin: {person.origin.name}</p>
-                <p>URL: {person.url}</p>
-                <p>Created: {person.created}</p>
+                <p>Gender: {character.gender}</p>
+                {character.type ? (
+                  <p>type: {character.type}</p>
+                ) : (
+                  <p>No type</p>
+                )}
+                <p>Species: {character.species}</p>
+                <p>Status: {character.status}</p>
+                <p>Location: {character.location.name}</p>
+                <p>Origin: {character.origin.name}</p>
+                <p>URL: {character.url}</p>
+                <p>Created: {character.created}</p>
               </div>
             </div>
           )}

@@ -1,45 +1,26 @@
 import './../styles/search.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
-import { ICharacter, RootState } from '../services/types';
+import { ICharacter } from '../services/types';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/loader';
 import RickAndMorty from './../assets/rick-morty.png';
 import Pagination from '../components/pagination';
-import { searchAll } from '../services/API';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  startMainLoader,
-  stopMainLoader,
-} from '../services/store/loadersReducer';
+import { fetchCharacters } from '../services/API';
+import { useAppDispatch, useAppSelector } from '../services/store/store';
 
 function SearchPage() {
-  const [totalPage, setTotalPage] = useState<number>(1);
-  const dispatch = useDispatch();
-  const characters = useSelector(
-    (state: RootState) => state.characters.characters
-  );
-  const isLoading = useSelector((state: RootState) => state.loaders.mainLoader);
+  const totalPage = useAppSelector((state) => state.pages.totalPages);
+  const dispatch = useAppDispatch();
+  const { characters, isLoading } = useAppSelector((state) => state.characters);
   const { page } = useParams();
 
-  const handleCallback = useCallback(
-    (persons: ICharacter[], pages: number) => {
-      dispatch({ type: 'SET_CHARACTERS', payload: persons });
-      setTotalPage(pages);
-    },
-    [dispatch]
-  );
-
   useEffect(() => {
-    dispatch(startMainLoader());
-    if (page) {
-      searchAll(+page, handleCallback).then(() => dispatch(stopMainLoader()));
-    }
-  }, [dispatch, handleCallback, page]);
+    if (page) dispatch(fetchCharacters(+page));
+  }, [dispatch, page]);
 
   const search = async () => {
-    dispatch(startMainLoader());
-    searchAll(1, handleCallback).then(() => dispatch(stopMainLoader()));
+    if (page) dispatch(fetchCharacters(+page));
   };
 
   const isPage = () => (page ? +page : 1);

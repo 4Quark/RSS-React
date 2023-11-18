@@ -4,7 +4,9 @@ import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
 import { Provider } from 'react-redux';
-import { store } from '../services/store/store';
+import { setupStore } from '../services/store/store';
+
+const store = setupStore();
 
 vi.mock('axios');
 

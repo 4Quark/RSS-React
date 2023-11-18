@@ -2,7 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import SearchPage from '../pages/searchPage';
 import { Provider } from 'react-redux';
-import { store } from '../services/store/store';
+import { setupStore } from '../services/store/store';
+
+const store = setupStore();
 
 test('list empty', () => {
   render(

@@ -1,5 +1,3 @@
-import { EmptyObject } from '@reduxjs/toolkit';
-
 export interface ICharacter {
   id: number;
   name: string;
@@ -33,6 +31,8 @@ export interface IResult {
 
 export interface ICharacterState {
   characters: ICharacter[];
+  isLoading: boolean;
+  error: string;
 }
 
 export interface ICounterState {
@@ -48,9 +48,12 @@ export interface ILoaderState {
   extraLoader: boolean;
 }
 
-export type RootState = EmptyObject & {
-  count: ICounterState;
-  value: IValueState;
-  characters: ICharacterState;
-  loaders: ILoaderState;
-};
+export interface IPaginationState {
+  totalPages: number;
+}
+
+export interface ISingleState {
+  character: ICharacter | null;
+  isLoading: boolean;
+  error: string;
+}
