@@ -1,10 +1,8 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import '../styles/App.css';
-import '../styles/index.css';
-import '../styles/search.css';
 import { Provider } from 'react-redux';
 import { setupStore } from '../services/store/store';
+import './../styles/globals.css';
 
 const store = setupStore();
 

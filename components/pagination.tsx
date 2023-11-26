@@ -1,7 +1,7 @@
+import router, { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../services/store/store';
 import { pagesSlice } from '../services/store/paginationReducer';
 import React from 'react';
-import router, { useRouter } from 'next/router';
 
 type myProps = {
   page: number;
@@ -15,11 +15,19 @@ function Pagination(p: myProps) {
   const { query } = useRouter();
 
   const nextPage = function () {
-    const newPage = query.page ? (+query.page + 1).toString() : '1';
+    let newPage = query.page ? (+query.page + 1).toString() : '1';
+    if (query.query) {
+      const newQuery = '?query=' + query.query.toString().trim();
+      newPage = newPage + newQuery;
+    }
     router.push(newPage);
   };
   const prevPage = function () {
-    const newPage = query.page ? (+query.page - 1).toString() : '1';
+    let newPage = query.page ? (+query.page - 1).toString() : '1';
+    if (query.query) {
+      const newQuery = '?query=' + query.query.toString().trim();
+      newPage = newPage + newQuery;
+    }
     router.push(newPage);
   };
 

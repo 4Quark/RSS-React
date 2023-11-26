@@ -1,12 +1,10 @@
-import React from 'react';
-import Layout from '../components/layout';
 import Image from 'next/image';
-import RMLogo from './../assets/dance.png';
+import Layout from '@/components/layout';
 
-export default function Index() {
+export default function Home() {
   return (
-    <>
-      <Layout>
+    <Layout>
+      <main>
         <h1>Home Rick and Morty</h1>
         <a href="https://rickandmortyapi.com/documentation/" target="blank">
           Link to API documentation
@@ -26,13 +24,13 @@ export default function Index() {
           who also serve as executive producers.
         </p>
         <Image
-          src={RMLogo}
+          src="/dance.png"
           width={300}
           height={334}
           className="RM_home"
           alt="Rick and Morty"
         />
-      </Layout>
-    </>
+      </main>
+    </Layout>
   );
 }

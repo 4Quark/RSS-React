@@ -8,6 +8,7 @@ module.exports = {
       node: true,
     },
     extends: [
+      'plugin:@next/next/recommended',
       'plugin:react/recommended',
       'plugin:@typescript-eslint/recommended',
       'prettier',

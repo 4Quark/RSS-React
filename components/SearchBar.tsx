@@ -1,30 +1,31 @@
+'use client';
+
+import router from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
-import ErrorButton from './errorBtn';
-// import { useNavigate } from 'react-router-dom';
-import { searchSlice } from '../services/store/valueReducer';
-import { useAppDispatch, useAppSelector } from '../services/store/store';
 import React from 'react';
+import { useSearchParams } from 'next/navigation';
 
-type myProps = { fetchData: () => void };
-
-function SearchBar(props: myProps) {
-  // const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const searchValue = useAppSelector((state) => state.value.searchValue);
-  const { updateSearch } = searchSlice.actions;
+function SearchBar() {
   const [inputValue, setInputValue] = useState<string>('');
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setInputValue(searchValue);
-  }, [searchValue]);
+    const val = searchParams ? searchParams.get('query')?.toString() : '';
+    if (val) setInputValue(val);
+  }, [searchParams]);
 
-  const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // navigate('/search/1');
     if (inputValue) {
-      dispatch(updateSearch(inputValue.trim()));
-    } else dispatch(updateSearch(''));
-    props.fetchData();
+      router.push({
+        pathname: '/search/1',
+        query: 'query=' + inputValue.trim(),
+      });
+    } else {
+      router.push({
+        pathname: '/search/1',
+      });
+    }
   };
 
   return (
@@ -39,7 +40,6 @@ function SearchBar(props: myProps) {
         <button type="submit" className="search_btn">
           Search
         </button>
-        <ErrorButton />
       </form>
     </section>
   );

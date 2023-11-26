@@ -1,14 +1,12 @@
-import RMLogo from './../assets/RMLogo.png';
-import Link from 'next/link';
-import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-function Layout({ children }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header>
         <Image
-          src={RMLogo}
+          src={'/RMLogo.png'}
           width={260}
           height={80}
           className="RMLogo"
@@ -19,9 +17,7 @@ function Layout({ children }) {
           <Link href="/search/1">Search</Link>
         </div>
       </header>
-      {children}
+      <main>{children}</main>
     </>
   );
 }
-
-export default Layout;
