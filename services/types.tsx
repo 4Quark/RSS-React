@@ -29,6 +29,19 @@ export interface IResult {
   results: ICharacter[];
 }
 
+export interface IResponseProps {
+  characters: IResult;
+}
+
+export interface ISingleProps {
+  character: ICharacter;
+}
+
+export interface IExtendProps {
+  characters: IResult;
+  character: ICharacter;
+}
+
 export interface ICharacterState {
   characters: ICharacter[];
   isLoading: boolean;

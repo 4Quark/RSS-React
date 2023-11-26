@@ -1,14 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import valueReducer from './valueReducer';
-import charactersReducer from './charactersReducer';
-import singleReducer from './singleReducer';
 import pagesReducer from './paginationReducer';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const RootReducer = combineReducers({
-  value: valueReducer,
-  characters: charactersReducer,
-  single: singleReducer,
   pages: pagesReducer,
 });
 

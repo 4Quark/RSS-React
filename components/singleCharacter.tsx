@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import { ISingleProps } from '@/services/types';
 import router from 'next/router';
 import React from 'react';
 
-function SingleCharacter({ character }) {
+function SingleCharacter({ character }: ISingleProps) {
   return (
     <section className="each_character" data-testid="extended_data">
       {character && (

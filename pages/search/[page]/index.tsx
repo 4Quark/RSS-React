@@ -3,8 +3,9 @@ import Layout from '@/components/layout';
 import SearchBar from '@/components/SearchBar';
 import { GetServerSideProps } from 'next';
 import ListCharacters from '@/components/listCharacters';
+import { IResponseProps } from '@/services/types';
 
-function Page({ characters }) {
+function Page({ characters }: IResponseProps) {
   return (
     <>
       <Layout>

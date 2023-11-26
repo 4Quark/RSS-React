@@ -3,15 +3,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Pagination from '@/components/pagination';
-import { ICharacter } from '@/services/types';
+import { ICharacter, IResponseProps } from '@/services/types';
 import { useAppDispatch, useAppSelector } from '@/services/store/store';
 import { pagesSlice } from '@/services/store/paginationReducer';
 
-function ListCharacters({ characters }) {
+function ListCharacters({ characters }: IResponseProps) {
   const itemsPerPage = useAppSelector((state) => state.pages.itemsPerPage);
   const { query } = useRouter();
   const isPage = () => (query.page ? +query.page : 1);
-  if (!characters) characters = [];
   const dispatch = useAppDispatch();
   if (characters.info) {
     dispatch(pagesSlice.actions.updateTotalPages(characters.info.pages));

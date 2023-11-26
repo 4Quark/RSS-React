@@ -4,8 +4,9 @@ import SingleCharacter from '@/components/singleCharacter';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/SearchBar';
 import ListCharacters from '@/components/listCharacters';
+import { IExtendProps } from '@/services/types';
 
-function PersonPage({ characters, character }) {
+function PersonPage({ characters, character }: IExtendProps) {
   return (
     <Layout>
       <SearchBar />
