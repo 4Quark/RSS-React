@@ -34,3 +34,22 @@ form {
 }
 
 input {background-color: blueviolet;}
+
+.tile_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.tile {
+  width: 300px;
+  border: 1px solid red;
+  border-radius: 10px;
+}
+
+.tile_img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgb(0, 55, 255);
+  border-radius: 50%;
+}

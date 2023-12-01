@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../store/store';
+import { tilesSlice } from '../store/tilesReducer';
 
 export type formData = {
   accept: boolean;
@@ -14,7 +16,9 @@ export type formData = {
 
 function ReactHookForm() {
   const { register, handleSubmit } = useForm<formData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const dispatch = useAppDispatch();
+  const { pushTile } = tilesSlice.actions;
+  const onSubmit = handleSubmit((data) => dispatch(pushTile(data)));
 
   return (
     <>
