@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../store/store';
 import { tilesSlice } from '../store/tilesReducer';
+import { useNavigate } from 'react-router-dom';
 
 export type formData = {
   accept: boolean;
@@ -15,14 +16,28 @@ export type formData = {
 };
 
 function ReactHookForm() {
-  const { register, handleSubmit } = useForm<formData>();
+  const { register, handleSubmit, setValue } = useForm<formData>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
-  const onSubmit = handleSubmit((data) => dispatch(pushTile(data)));
+  const onSubmit = handleSubmit((data) => {
+    dispatch(pushTile(data));
+    navigate('/');
+  });
+
+  const autocomplete = () => {
+    setValue('name', 'Polite Marshmallow');
+    setValue('age', 24);
+    setValue('email', 'polite_marshmallow@react.com');
+    setValue('password', 'Primary_1');
+    setValue('passwordRepeat', 'Primary_1');
+    setValue('country', 'Belarus');
+  };
 
   return (
     <>
       <h2>React Hook Form</h2>
+      <button onClick={autocomplete}>Autocomplete</button>
       <form onSubmit={onSubmit}>
         <label>
           Name: <input {...register('name')} />
@@ -47,7 +62,7 @@ function ReactHookForm() {
         <label>
           Gender:
           <label>
-            <input type="radio" value="male" {...register('gender')} />
+            <input type="radio" value="male" defaultChecked {...register('gender')} />
             male
           </label>
           <label>

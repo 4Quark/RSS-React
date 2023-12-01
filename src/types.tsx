@@ -8,7 +8,7 @@ export interface ITile {
   age: number;
   country: string;
   email: string;
-  file: FileList;
+  file: FileList | null;
   gender: string;
   name: string;
   password: string;
@@ -17,7 +17,7 @@ export interface ITile {
 
 export interface IData {
   accept: boolean;
-  age: number;
+  age: string;
   country: string;
   email: string;
   file: FileList;

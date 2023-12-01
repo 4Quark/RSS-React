@@ -20,6 +20,10 @@
   }
 }
 
+.nav a {
+  margin: 20px;
+}
+
 .card {
   padding: 2em;
 }

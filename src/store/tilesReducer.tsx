@@ -11,8 +11,6 @@ export const tilesSlice = createSlice({
   initialState: defaultState,
   reducers: {
     pushTile(state, action: PayloadAction<ITile>) {
-      console.log(state.tiles);
-      console.log(action.payload);
       state.tiles = [...state.tiles, action.payload];
     },
     charactersFetchingError(state, action: PayloadAction<ITile>) {
