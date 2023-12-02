@@ -30,3 +30,15 @@ export interface IData {
 export interface IForm {
   data: IData | null;
 }
+
+export type formData = {
+  accept: boolean;
+  age: number;
+  country: string;
+  email: string;
+  file: FileList;
+  gender: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+};

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../store/store';
-import { ITile } from '../types';
+import { ITile } from '../services/types';
 import Tile from '../components/tile';
 
 function Home() {

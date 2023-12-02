@@ -1,16 +1,26 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import { tilesSlice } from '../store/tilesReducer';
+import { schema } from '../services/schema';
 
 function UncontrolledForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
-  const handleForm = (e: React.SyntheticEvent) => {
+  const [errors, setErrors] = useState<string[]>([]);
+  // let errors: string[] = [];
+  // name: null,
+  // age: null,
+  // email: null,
+  // password: null,
+  // confirmPassword: null,
+  // file: null,
+  // accept: null,
+  const handleForm = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const formGender = genderRefMale.current?.checked ? 'male' : 'female';
-    console.log(fileRef.current?.files);
+
     if (
       acceptRef.current &&
       ageRef.current &&
@@ -30,11 +40,22 @@ function UncontrolledForm() {
         gender: formGender,
         name: nameRef.current.value,
         password: passwordRef.current.value,
-        passwordRepeat: passwordDoubleRef.current.value,
+        confirmPassword: passwordDoubleRef.current.value,
       };
-      dispatch(pushTile(data));
+
+      // schema.validate(data).then(()=>dispatch(pushTile(data))).catch(error => {setError(err.errors[0]}
+
+      try {
+        schema.validateSync(data, { abortEarly: false });
+        dispatch(pushTile(data));
+        navigate('/');
+      } catch (e) {
+        setErrors(e.errors);
+      }
+
+      // dispatch(pushTile(data));
+      // navigate('/');
     }
-    navigate('/');
   };
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -51,8 +72,8 @@ function UncontrolledForm() {
     if (nameRef.current) nameRef.current.value = 'Polite Marshmallow';
     if (ageRef.current) ageRef.current.value = '24';
     if (maleRef.current) maleRef.current.value = 'polite_marshmallow@react.com';
-    if (passwordRef.current) passwordRef.current.value = 'Primary_1';
-    if (passwordDoubleRef.current) passwordDoubleRef.current.value = 'Primary_1';
+    if (passwordRef.current) passwordRef.current.value = 'Primary*1';
+    if (passwordDoubleRef.current) passwordDoubleRef.current.value = 'Primary*1';
     if (countryRef.current) countryRef.current.value = 'Belarus';
   };
 
@@ -64,22 +85,36 @@ function UncontrolledForm() {
         <form onSubmit={handleForm} className="form_uncontrolled">
           <label>
             Name: <input type="text" name="name" ref={nameRef} />
+            {errors.includes('first letter must be uppercased') && <i>first letter must be uppercased</i>}
+            {errors.includes('name is a required field') && <i>name is a required field</i>}
           </label>
 
           <label>
             Age: <input type="number" name="age" ref={ageRef} />
+            {errors.includes('age is a required field') && <i>age is a required field</i>}
+            {errors.includes('age must be positive') && <i>age must be positive</i>}
+            {errors.includes('age must be integer') && <i>age must be integer</i>}
           </label>
 
           <label>
             email: <input type="email" name="male" ref={maleRef} />
+            {errors.includes('email is required') && <i>email is required</i>}
           </label>
 
           <label>
             Password: <input type="password" name="password" ref={passwordRef} />
+            {errors.includes('password is required') && <i>password is required</i>}
+            {errors.includes('at least 6 character') && <i>at least 6 character</i>}
+            {errors.includes('at least 1 lowercased letter') && <i>at least 1 lowercased letter</i>}
+            {errors.includes('at least 1 uppercased letter') && <i>at least 1 uppercased letter</i>}
+            {errors.includes('at least 1 number') && <i>at least 1 number</i>}
+            {errors.includes('at least 1 special character') && <i>at least 1 special character</i>}
           </label>
 
           <label>
             Repeat password: <input type="password" name="passwordDouble" ref={passwordDoubleRef} />
+            {errors.includes('passwords don`t mutch') && <i>passwords don`t mutch</i>}
+            {errors.includes('confirm password is required') && <i>confirm password is required</i>}
           </label>
 
           <label>
@@ -90,6 +125,8 @@ function UncontrolledForm() {
 
           <label>
             Add file: <input type="file" name="file" ref={fileRef} />
+            {errors.includes('you need to provide a file') && <i>you need to provide a file</i>}
+            {errors.includes('file is required') && <i>file is required</i>}
           </label>
 
           <label>
@@ -103,6 +140,10 @@ function UncontrolledForm() {
           <label className="terms_and_condidions">
             <input type="checkbox" name="accept" ref={acceptRef} /> I agree to the terms and conditions as set
             out by the user agreement.
+            {errors.includes('you must accept the terms and conditions') && (
+              <i>you must accept the terms and conditions</i>
+            )}
+            {errors.includes('please read terms and conditions') && <i>please read terms and conditions</i>}
           </label>
 
           <button type="submit">Submit</button>

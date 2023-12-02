@@ -2,55 +2,9 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../store/store';
 import { tilesSlice } from '../store/tilesReducer';
 import { useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export type formData = {
-  accept: boolean;
-  age: number;
-  country: string;
-  email: string;
-  file: FileList;
-  gender: string;
-  name: string;
-  password: string;
-  passwordRepeat: string;
-};
-
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .matches(/^[A-ZА-Я][a-zа-яё]+(\s[A-ZА-Я][a-zа-яё]+)*$/, 'first letter must be uppercased')
-    .required('name is a required field'),
-  age: yup
-    .number()
-    .required('age is a required field')
-    .positive('age must be positive')
-    .integer('age must be integer'),
-  email: yup.string().email().required('email is required'),
-  gender: yup.string().required(),
-  password: yup
-    .string()
-    .required('password is required')
-    .min(6, 'at least 6 character')
-    .matches(/(.*[a-z].*)/, 'at least 1 lowercased letter')
-    .matches(/(.*[A-Z].*)/, 'at least 1 uppercased letter')
-    .matches(/(.*[0-9].*)/, 'at least 1 number')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'at least 1 special character'),
-  passwordRepeat: yup.string().required('repeat password is required'),
-  country: yup.string().required(),
-  file: yup
-    .mixed()
-    .test('required', 'You need to provide a file', (file) => {
-      if (file) return true;
-      return false;
-    })
-    .required('file is required'),
-  accept: yup
-    .boolean()
-    .oneOf([true], 'you must accept the terms and conditions')
-    .required('please read terms and conditions'),
-});
+import { schema } from '../services/schema';
+import { formData } from '../services/types';
 
 function ReactHookForm() {
   const {
@@ -72,8 +26,8 @@ function ReactHookForm() {
     setValue('name', 'Polite Marshmallow');
     setValue('age', 24);
     setValue('email', 'polite_marshmallow@react.com');
-    setValue('password', 'Primary_1');
-    setValue('passwordRepeat', 'Primary_1');
+    setValue('password', 'Primary*1');
+    setValue('confirmPassword', 'Primary*1');
     setValue('country', 'Belarus');
   };
 
@@ -104,8 +58,8 @@ function ReactHookForm() {
           </label>
 
           <label>
-            Repeat password: <input type="password" {...register('passwordRepeat')} />
-            {errors.passwordRepeat && <i>{errors.passwordRepeat.message}</i>}
+            Repeat password: <input type="password" {...register('confirmPassword')} />
+            {errors.confirmPassword && <i>{errors.confirmPassword.message}</i>}
           </label>
 
           <label>
@@ -121,7 +75,7 @@ function ReactHookForm() {
           </label>
 
           <label>
-            Add file: <input type="file" {...register('file')} />
+            Add file: <input type="file" {...register('file')} required />
             {errors.file && <i>{errors.file.message}</i>}
           </label>
 

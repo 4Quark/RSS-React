@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ITile, ITilesState } from '../types';
+import { ITile, ITilesState } from '../services/types';
 
 const defaultState: ITilesState = {
   tiles: [],

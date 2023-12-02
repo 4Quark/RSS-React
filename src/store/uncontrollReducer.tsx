@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IData, IForm } from '../types';
+import { IData, IForm } from '../services/types';
 
 const defaultState: IForm = {
   data: null,
