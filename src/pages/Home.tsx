@@ -8,17 +8,16 @@ function Home() {
   return (
     <>
       <h2>Home Page</h2>
-      <p>
-        Create youre character with <Link to="/uncontrolled_form">Uncontrolled Form</Link> or with{' '}
-        <Link to="/hook_form">React Hook Form</Link>
-      </p>
       <div>
-        Results
+        {tiles.length > 0 && <h3>Results</h3>}
         <div className="tile_container">
           {tiles.length ? (
             tiles.map((tile: ITile, i: number) => <Tile key={i} tile={tile} />)
           ) : (
-            <p>fill any form</p>
+            <p>
+              Create youre character with <Link to="/uncontrolled_form">Uncontrolled Form</Link> or with{' '}
+              <Link to="/hook_form">React Hook Form</Link>
+            </p>
           )}
         </div>
       </div>
