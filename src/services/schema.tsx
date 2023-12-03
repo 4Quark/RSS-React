@@ -20,7 +20,6 @@ export const schema = yup.object().shape({
     .matches(/(.*[A-Z].*)/, 'at least 1 uppercased letter')
     .matches(/(.*[0-9].*)/, 'at least 1 number')
     .matches(/[!@#$%^&*(),.?":{}|<>]/, 'at least 1 special character'),
-  // confirmPassword: yup.string().required('repeat password is required'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], 'passwords don`t mutch')

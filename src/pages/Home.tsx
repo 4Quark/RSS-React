@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../services/store';
 import { ITile } from '../services/types';
 import Tile from '../components/tile';
 

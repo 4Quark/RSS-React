@@ -1,22 +1,15 @@
 import { useRef, useState } from 'react';
-import { useAppDispatch } from '../store/store';
+import { useAppDispatch } from '../services/store';
 import { useNavigate } from 'react-router-dom';
-import { tilesSlice } from '../store/tilesReducer';
+import { tilesSlice } from '../services/tilesReducer';
 import { schema } from '../services/schema';
+import { ValidationError } from 'yup';
 
 function UncontrolledForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
   const [errors, setErrors] = useState<string[]>([]);
-  // let errors: string[] = [];
-  // name: null,
-  // age: null,
-  // email: null,
-  // password: null,
-  // confirmPassword: null,
-  // file: null,
-  // accept: null,
   const handleForm = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const formGender = genderRefMale.current?.checked ? 'male' : 'female';
@@ -27,6 +20,7 @@ function UncontrolledForm() {
       countryRef.current &&
       maleRef.current &&
       fileRef.current &&
+      fileRef.current.files &&
       nameRef.current &&
       passwordRef.current &&
       passwordDoubleRef.current
@@ -42,19 +36,15 @@ function UncontrolledForm() {
         password: passwordRef.current.value,
         confirmPassword: passwordDoubleRef.current.value,
       };
-
-      // schema.validate(data).then(()=>dispatch(pushTile(data))).catch(error => {setError(err.errors[0]}
-
       try {
         schema.validateSync(data, { abortEarly: false });
         dispatch(pushTile(data));
         navigate('/');
       } catch (e) {
-        setErrors(e.errors);
+        if (e instanceof ValidationError) {
+          setErrors(e.errors);
+        }
       }
-
-      // dispatch(pushTile(data));
-      // navigate('/');
     }
   };
   const nameRef = useRef<HTMLInputElement>(null);
@@ -124,7 +114,7 @@ function UncontrolledForm() {
           </label>
 
           <label>
-            Add file: <input type="file" name="file" ref={fileRef} />
+            Add file: <input type="file" name="file" ref={fileRef} required />
             {errors.includes('you need to provide a file') && <i>you need to provide a file</i>}
             {errors.includes('file is required') && <i>file is required</i>}
           </label>

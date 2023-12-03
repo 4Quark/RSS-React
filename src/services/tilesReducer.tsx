@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ITile, ITilesState } from '../services/types';
+import { ITile, ITilesState } from './types';
 
 const defaultState: ITilesState = {
   tiles: [],
@@ -12,9 +12,6 @@ export const tilesSlice = createSlice({
   reducers: {
     pushTile(state, action: PayloadAction<ITile>) {
       state.tiles = [...state.tiles, action.payload];
-    },
-    charactersFetchingError(state, action: PayloadAction<ITile>) {
-      state.lastTile = action.payload;
     },
   },
 });

@@ -1,12 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import tilesReducer from './tilesReducer';
-import hookReducer from './hookReducer';
-import uncontrollReducer from './uncontrollReducer';
 
 const RootReducer = combineReducers({
-  uncontrollForm: uncontrollReducer,
-  hookForm: hookReducer,
   tiles: tilesReducer,
 });
 

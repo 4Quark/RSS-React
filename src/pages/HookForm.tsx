@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../store/store';
-import { tilesSlice } from '../store/tilesReducer';
+import { useAppDispatch } from '../services/store';
+import { tilesSlice } from '../services/tilesReducer';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../services/schema';
-import { formData } from '../services/types';
+import { ITile } from '../services/types';
 
 function ReactHookForm() {
   const {
@@ -12,7 +12,7 @@ function ReactHookForm() {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<formData>({ resolver: yupResolver(schema) });
+  } = useForm<ITile>({ resolver: yupResolver(schema) });
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
@@ -38,7 +38,7 @@ function ReactHookForm() {
       <div className="form_container">
         <form onSubmit={onSubmit}>
           <label>
-            Name: <input {...register('name')} />
+            Name: <input {...register('name', { onChange: (e) => <i>{e.name.message}</i> })} />
             {errors.name && <i>{errors.name.message}</i>}
           </label>
 
