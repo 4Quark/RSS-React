@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../services/store';
+import { useAppDispatch, useAppSelector } from '../services/store';
 import { tilesSlice } from '../services/tilesReducer';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../services/schema';
 import { ITile } from '../services/types';
+import Select from '../components/select';
 
 function ReactHookForm() {
   const {
@@ -16,6 +17,7 @@ function ReactHookForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
+  const { countries } = useAppSelector((state) => state.country);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(pushTile(data));
@@ -79,14 +81,7 @@ function ReactHookForm() {
             {errors.file && <i>{errors.file.message}</i>}
           </label>
 
-          <label>
-            Choose your country
-            <select {...register('country')}>
-              <option value="Russia">Russia</option>
-              <option value="Belarus">Belarus</option>
-              <option value="Spain">Spain</option>
-            </select>
-          </label>
+          <Select ref={{ ...register('country') }} list={countries} defaultValue={'Belarus'} />
 
           <label className="terms_and_condidions">
             <input type="checkbox" {...register('accept')} /> I agree to the terms and conditions as set out

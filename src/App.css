@@ -54,7 +54,7 @@ p {
 form {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  width: 500px;
   margin: 0 auto;
   padding: 20px;
   margin: 20px;
@@ -68,12 +68,13 @@ label {
   margin: 5px;
 }
 
-input {
+input, select {
   height: 35px;
   padding: 5px 10px;
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  margin-left: 5px;
 }
 input:focus {
   border-color: #747bff;

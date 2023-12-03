@@ -1,14 +1,16 @@
 import { useRef, useState } from 'react';
-import { useAppDispatch } from '../services/store';
+import { useAppDispatch, useAppSelector } from '../services/store';
 import { useNavigate } from 'react-router-dom';
 import { tilesSlice } from '../services/tilesReducer';
 import { schema } from '../services/schema';
 import { ValidationError } from 'yup';
+import Select from '../components/select';
 
 function UncontrolledForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pushTile } = tilesSlice.actions;
+  const { countries } = useAppSelector((state) => state.country);
   const [errors, setErrors] = useState<string[]>([]);
   const handleForm = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -109,8 +111,12 @@ function UncontrolledForm() {
 
           <label>
             Gender:
-            <input type="radio" name="gender" defaultChecked ref={genderRefMale} /> male
-            <input type="radio" name="gender" ref={genderRefFemale} /> female
+            <label htmlFor="male">
+              <input type="radio" name="gender" id="male" defaultChecked ref={genderRefMale} /> male
+            </label>
+            <label htmlFor="female">
+              <input type="radio" name="gender" id="female" ref={genderRefFemale} /> female
+            </label>
           </label>
 
           <label>
@@ -119,13 +125,7 @@ function UncontrolledForm() {
             {errors.includes('file is required') && <i>file is required</i>}
           </label>
 
-          <label>
-            Choose your country
-            <select ref={countryRef}>
-              <option value="Russia">Russia</option>
-              <option value="Belarus">Belarus</option>
-            </select>
-          </label>
+          <Select ref={countryRef} list={countries} defaultValue={'Belarus'} />
 
           <label className="terms_and_condidions">
             <input type="checkbox" name="accept" ref={acceptRef} /> I agree to the terms and conditions as set

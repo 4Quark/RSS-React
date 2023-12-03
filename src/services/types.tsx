@@ -3,6 +3,10 @@ export interface ITilesState {
   lastTile: ITile | null;
 }
 
+export interface ICountryState {
+  countries: string[];
+}
+
 export interface ITile {
   accept: boolean;
   age: number;

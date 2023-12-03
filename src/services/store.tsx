@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import tilesReducer from './tilesReducer';
+import countryReducer from './countryReducer';
 
 const RootReducer = combineReducers({
   tiles: tilesReducer,
+  country: countryReducer,
 });
 
 export const setupStore = () => {
