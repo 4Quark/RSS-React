@@ -1,0 +1,105 @@
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav a {
+  margin: 20px;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.tile_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.tile {
+  width: 300px;
+  border: 1px solid rgb(129, 129, 129);
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(137, 137, 137, 0.356);
+}
+.tile:hover {
+  border-color: #747bff;
+}
+
+p {
+  margin: 6px auto;
+}
+
+.tile_img {
+  width: 200px;
+  height: 200px;
+  border: 3px solid #a9a9a9;
+  border-radius: 50%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  overflow: hidden;
+}
+
+label {
+  font-size: 16px;
+  margin: 5px;
+}
+
+input, select {
+  height: 35px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+input:focus {
+  border-color: #747bff;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  height: 12px;
+  margin-left: 10px;
+}
+
+input[type="file"] {
+  border: none;
+}
+
+i {
+  font-size: 11px;
+  color: red;
+  margin-left: 5px;
+}
+
+.terms_and_condidions {
+  font-size: 11px;
+}
+
+.form_container {
+  display: flex;
+  justify-content: center;
+}
