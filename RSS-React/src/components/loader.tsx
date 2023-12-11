@@ -1,6 +1,6 @@
 import './../styles/loader.css';
 
-function Loader() {
+export function Loader() {
   return (
     <div className="lds-ring">
       <div></div>
@@ -10,5 +10,3 @@ function Loader() {
     </div>
   );
 }
-
-export default Loader;

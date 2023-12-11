@@ -1,6 +1,6 @@
 import dance from './../assets/dance.png';
 
-function Home() {
+export function Home() {
   return (
     <>
       <h1>Home Rick and Morty</h1>
@@ -25,5 +25,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;

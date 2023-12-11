@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function ErrorButton() {
+export function ErrorButton() {
   const [error, setError] = useState(false);
 
   const throwError = () => {
@@ -24,5 +24,3 @@ function ErrorButton() {
     </button>
   );
 }
-
-export default ErrorButton;

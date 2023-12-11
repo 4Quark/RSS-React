@@ -1,23 +1,23 @@
 import { FormEvent, useEffect, useState } from 'react';
-import ErrorButton from './errorBtn';
+import { ErrorButton } from './errorBtn';
 import { useNavigate } from 'react-router-dom';
 
-type myProps = { fetchData: () => void };
+type SearchBarProps = { fetchData: (page: number) => void };
 
-function SearchCard(props: myProps) {
+export function SearchBar(props: SearchBarProps) {
   const [value, setValue] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const localValue: string = localStorage.getItem('searchInput') || '';
-    setValue(localValue);
+    const savedSearchValue: string = localStorage.getItem('searchInput') || '';
+    setValue(savedSearchValue);
   }, []);
 
-  const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     navigate('/search/1');
     localStorage.setItem('searchInput', value.trim());
-    props.fetchData();
+    props.fetchData(1);
   };
 
   return (
@@ -37,5 +37,3 @@ function SearchCard(props: myProps) {
     </section>
   );
 }
-
-export default SearchCard;

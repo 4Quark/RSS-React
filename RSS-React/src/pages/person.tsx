@@ -1,21 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { ICharacter } from '../services/types';
 import { useEffect, useState } from 'react';
-import Loader from '../components/loader';
-import { searchCaracter } from '../services/API';
+import { Loader } from '../components/loader';
+import { searchCharacter } from '../services/API';
 
-function PersonPage() {
+export function PersonPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [person, setPerson] = useState<ICharacter>();
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    setIsLoading(true);
-    if (id) searchCaracter(+id, handlePerson).then(() => setIsLoading(false));
+    (async function fetchPerson() {
+      setIsLoading(true);
+      const response = await searchCharacter(id ? +id : 1);
+      if (response) {
+        setPerson(response);
+      }
+      setIsLoading(false);
+    })();
   }, [id]);
-
-  const handlePerson = (person: ICharacter) => setPerson(person);
 
   return (
     <section className="each_character">
@@ -44,5 +48,3 @@ function PersonPage() {
     </section>
   );
 }
-
-export default PersonPage;

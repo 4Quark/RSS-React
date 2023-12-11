@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import RMLogo from './../assets/RMLogo.png';
 
-function Layout() {
+export function Layout() {
   return (
     <>
       <header>
@@ -15,5 +15,3 @@ function Layout() {
     </>
   );
 }
-
-export default Layout;

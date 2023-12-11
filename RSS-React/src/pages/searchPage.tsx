@@ -2,48 +2,44 @@ import './../styles/search.css';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { ICharacter } from '../services/types';
-import SearchBar from '../components/SearchBar';
-import Loader from '../components/loader';
+import { SearchBar } from '../components/SearchBar';
+import { Loader } from '../components/loader';
 import RickAndMorty from './../assets/rick-morty.png';
-import Pagination from '../components/pagination';
+import { Pagination } from '../components/pagination';
 import { searchAll } from '../services/API';
 
-function SearchPage() {
+export function SearchPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [persons, setPersons] = useState<ICharacter[]>([]);
   const { page } = useParams();
 
   useEffect(() => {
-    setIsLoading(true);
-    console.log(page, persons);
-    if (page) {
-      searchAll(+page, handleCallback).then(() => setIsLoading(false));
-    }
+    handleFetch(page ? +page : 1);
   }, [page]);
 
-  const handleCallback = (persons: ICharacter[], pages: number) => {
-    setPersons(persons);
-    setTotalPage(pages);
-  };
-
-  const search = async () => {
+  const handleFetch = async (page: number) => {
     setIsLoading(true);
-    searchAll(1, handleCallback).then(() => setIsLoading(false));
+    const response = await searchAll(page);
+    if (response) {
+      setPersons(response.persons);
+      setTotalPage(response.pages);
+    }
+    setIsLoading(false);
   };
 
   const isPage = () => (page ? +page : 1);
 
   return (
     <>
-      <SearchBar fetchData={search} />
+      <SearchBar fetchData={handleFetch} />
       <div className="search_container">
         <section className="search_results">
           <h2>{persons.length ? 'Results' : 'There is nothing here'}</h2>
           {isLoading && <Loader />}
           <div className="container">
-            {persons.map((person, i) => (
-              <Link key={i} to={'/search/' + page + '/' + person.id}>
+            {persons.map((person, index) => (
+              <Link key={index} to={`/search/${page}/${person.id}`}>
                 {person.name}
               </Link>
             ))}
@@ -60,5 +56,3 @@ function SearchPage() {
     </>
   );
 }
-
-export default SearchPage;

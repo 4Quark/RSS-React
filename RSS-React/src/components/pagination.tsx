@@ -1,18 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 
-type myProps = {
+type PaginationProps = {
   page: number;
   totalPage: number;
 };
 
-function Pagination(p: myProps) {
+export function Pagination(p: PaginationProps) {
   const navigate = useNavigate();
-  const nextPage = function () {
-    navigate('/search/' + (p.page + 1));
-  };
-  const prevPage = function () {
-    navigate('/search/' + (p.page - 1));
-  };
+  const nextPage = () => navigate(`/search/${p.page + 1}`);
+  const prevPage = () => navigate(`/search/${p.page - 1}`);
 
   return (
     <div className="pagination">
@@ -28,5 +24,3 @@ function Pagination(p: myProps) {
     </div>
   );
 }
-
-export default Pagination;
