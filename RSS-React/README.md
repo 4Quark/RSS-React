@@ -16,4 +16,4 @@ Common commands:
 
 There are extra-button with name «Slow» for imitation slow-internet connection so you can see the loader
 
-Deploy here:  [super-trifle.netlify.app](https://super-trifle-d2af06.netlify.app)
+Deploy here:  [super-trifle.netlify.app](https://merry-begonia-9cb255.netlify.app)
