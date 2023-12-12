@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ICharacter } from '../services/types';
 import { useEffect, useState } from 'react';
 import { Loader } from '../components/loader';
-import { searchCharacter } from '../services/API';
+import { RickAndMortyService } from '../services/API';
 
 export function PersonPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -13,11 +13,14 @@ export function PersonPage() {
   useEffect(() => {
     (async function fetchPerson() {
       setIsLoading(true);
-      const response = await searchCharacter(id ? +id : 1);
-      if (response) {
-        setPerson(response);
+      try {
+        const data = await RickAndMortyService.getSingleCharacter(id ? +id : 1);
+        setPerson(data);
+      } catch (error) {
+        alert('Some error occured. Please, try again');
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     })();
   }, [id]);
 
